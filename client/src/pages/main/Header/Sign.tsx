@@ -11,15 +11,38 @@ export const Sign: FC = () => {
   const userName =
     sessionStorage.getItem('userName') || localStorage.getItem('userName');
   const [userImage, setUserImage] = useState<string | null>();
+  const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 MB
+  const ALLOWED_MIME_TYPES = ['image/png', 'image/jpeg'];
 
   useEffect(() => {
     getPhoto();
   }, []);
 
-  const sendPhoto = (e: ChangeEvent<HTMLInputElement>) => {
+  const sendPhoto = async (e: ChangeEvent<HTMLInputElement>) => {
     const file: File = (e.target.files as FileList)[0];
     if (!file || !user) return null;
 
+    // Client-side validation
+    if (!ALLOWED_MIME_TYPES.includes(file.type)) {
+      alert('Invalid file type. Please upload a PNG or JPEG image.');
+      return;
+    }
+
+    if (file.size > MAX_FILE_SIZE) {
+      alert('File size exceeds the 2MB limit.');
+      return;
+    }
+
+    // Read the file as a buffer to validate its content
+    const arrayBuffer = await file.arrayBuffer();
+    const fileType = await fileTypeFromBuffer(new Uint8Array(arrayBuffer));
+
+    if (!fileType || !ALLOWED_MIME_TYPES.includes(fileType.mime)) {
+      alert('Invalid file content. Please upload a valid image.');
+      return;
+    }
+
+    // Proceed with uploading the validated file
     putPhoto(file, user).then(() => getPhoto());
   };
 
@@ -71,7 +94,7 @@ export const Sign: FC = () => {
           <input
             id="file-input"
             type="file"
-            accept="image/x-png"
+            accept="image/png,image/jpeg"
             style={{ display: 'none' }}
             onChange={sendPhoto}
           />
