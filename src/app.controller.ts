@@ -167,11 +167,11 @@ export class AppController {
     type: AppConfig,
     status: 200
   })
-  getConfig(): AppConfig {
-    this.logger.debug('Called getConfig');
-    const config = this.appService.getConfig();
-    return config;
-  }
+  // getConfig(): AppConfig {
+  //   this.logger.debug('Called getConfig');
+  //   const config = this.appService.getConfig();
+  //   return config;
+  // }
 
   @Get('/secrets')
   @ApiOperation({
