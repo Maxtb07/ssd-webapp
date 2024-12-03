@@ -36,7 +36,7 @@ export class UsersService {
     u.email = user.email;
     u.firstName = user.firstName;
     u.lastName = user.lastName;
-    u.isAdmin = user.isAdmin || false;
+    u.isAdmin = false
     u.company = user.company;
     u.cardNumber = user.cardNumber;
     u.phoneNumber = user.phoneNumber;
