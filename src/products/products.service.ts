@@ -50,10 +50,11 @@ export class ProductsService {
     );
   }
 
-  async updateProduct(query: string): Promise<void> {
+  async updateProduct(productName: string): Promise<void> {
+    const query = `UPDATE product SET views_count = views_count + 1 WHERE name = ?`;
     try {
       this.logger.debug(`Updating products table with query "${query}"`);
-      await this.em.getConnection().execute(query);
+      await this.em.getConnection().execute(query, [productName]);
       return;
     } catch (err) {
       this.logger.warn(`Failed to execute query. Error: ${err.message}`);
