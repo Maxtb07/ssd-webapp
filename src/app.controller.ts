@@ -159,14 +159,14 @@ export class AppController {
     }
   }
 
-  @Get('/config')
-  @ApiOperation({
-    description: API_DESC_CONFIG_SERVER
-  })
-  @ApiOkResponse({
-    type: AppConfig,
-    status: 200
-  })
+  // @Get('/config')
+  // @ApiOperation({
+  //   description: API_DESC_CONFIG_SERVER
+  // })
+  // @ApiOkResponse({
+  //   type: AppConfig,
+  //   status: 200
+  // })
   // getConfig(): AppConfig {
   //   this.logger.debug('Called getConfig');
   //   const config = this.appService.getConfig();
